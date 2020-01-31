@@ -1,6 +1,8 @@
 package app.model;
 
-import java.util.ArrayList;
+import com.sun.istack.internal.NotNull;
+
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -9,15 +11,22 @@ import java.util.UUID;
  */
 public class User {
     private String name;
-    private UUID user_id;
-    private ArrayList<Item> sellingItems;
-    private ArrayList<Item> interestedItems;
+    private UUID userID;
+    private HashSet<Item> sellingItems;
+    private HashSet<Item> interestedItems;
 
-    public User(String name, UUID user_id, ArrayList<Item> sellingItems, ArrayList<Item> interestedItems) {
+    public User(@NotNull String name, @NotNull UUID userID,
+                @NotNull HashSet<Item> sellingItems, @NotNull HashSet<Item> interestedItems) {
+
+        if (name == "") {
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
         this.name = name;
-        this.user_id = user_id;
+        this.userID= userID;
         this.sellingItems = sellingItems;
         this.interestedItems = interestedItems;
+
+
     }
 
     public String getName() {
@@ -28,27 +37,27 @@ public class User {
         this.name = name;
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public UUID getuserID() {
+        return userID;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setuserID(UUID userID) {
+        this.userID = userID;
     }
 
-    public ArrayList<Item> getSellingItems() {
+    public HashSet<Item> getSellingItems() {
         return sellingItems;
     }
 
-    public void setSellingItems(ArrayList<Item> sellingItems) {
+    public void setSellingItems(HashSet<Item> sellingItems) {
         this.sellingItems = sellingItems;
     }
 
-    public ArrayList<Item> getInterestedItems() {
+    public HashSet<Item> getInterestedItems() {
         return interestedItems;
     }
 
-    public void setInterestedItems(ArrayList<Item> interestedItems) {
+    public void setInterestedItems(HashSet<Item> interestedItems) {
         this.interestedItems = interestedItems;
     }
 
@@ -57,7 +66,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
-                ", user_id=" + user_id +
+                ", userID=" + userID+
                 ", sellingItems=" + sellingItems +
                 ", interestedItems=" + interestedItems +
                 '}';
@@ -69,14 +78,14 @@ public class User {
         if (!(o instanceof User)) return false;
         User user = (User) o;
         return Objects.equals(name, user.name) &&
-                Objects.equals(user_id, user.user_id) &&
+                Objects.equals(userID, user.userID) &&
                 Objects.equals(sellingItems, user.sellingItems) &&
                 Objects.equals(interestedItems, user.interestedItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, user_id, sellingItems, interestedItems);
+        return Objects.hash(name, userID, sellingItems, interestedItems);
     }
 
     /**
@@ -85,6 +94,7 @@ public class User {
      * @return true, if operation is successful. False, otherwise
      */
    public boolean addSellingItem(Item item) {
+        item.setSeller(this);
         return this.getSellingItems().add(item);
    }
 
@@ -103,6 +113,7 @@ public class User {
      * @return true, if operation is successful. False, otherwise
      */
     public boolean removeSellingItem(Item item) {
+        item.setSeller(null);
         return this.getSellingItems().remove(item);
     }
 

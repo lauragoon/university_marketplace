@@ -15,7 +15,7 @@ By online marketplace, we mean a place where we a signed-in user can add an item
  and other users excluding the lister can click interested or not interested.
  We don't facilitate DM'ing but that can be added later.
 
-The Web Application consists of users and items they have put up for sale.
+The Web Application consists of users and items that users have put up for sale.
 
 A user is someone who:
 1) buys items,
@@ -23,19 +23,17 @@ A user is someone who:
 3) or neither on the website.
 
 
-
-
-
 An item is abstractly an
 1) an image of an object AND
 2) string description of the object AND
 3) and current price of the object.
 
-Later on:
-1) List of people who have expressed interested in the item
-2)
+
 
 Once an item is assigned to a user it sticks with the user until:
 1) The user indicates the item as sold
 2) The user deletes the item
 
+Later on:
+1) List of people who have expressed interested in the item
+2) Adding email functionality
